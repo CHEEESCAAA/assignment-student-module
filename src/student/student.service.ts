@@ -1,5 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { UpdateStudentDto } from './dto/update-student.dto';
+import { Injectable } from '@nestjs/common';
+import { Controller, Delete, Param } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Student } from './entities/student.entity';
 import { Repository } from 'typeorm';
@@ -11,13 +11,7 @@ export class StudentService {
     @InjectRepository(Student)
     private readonly studentRepository: Repository<Student>,
   ){}
-  async update(id: number, updateStudentDto: UpdateStudentDto) {
-    const student = await this.studentRepository.findOneBy({ id });
-    if (!student) {
-      throw new Error(`Student with ID ${id} not found`);
-    }
-    const updatedStudent = Object.assign(student, updateStudentDto);
-    return this.studentRepository.save(updatedStudent);
+  async deleteStudent(id: number): Promise<void> {
+    await this.studentRepository.delete(id);
   }
-  
 }
