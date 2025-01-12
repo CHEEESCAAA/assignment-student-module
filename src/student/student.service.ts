@@ -5,16 +5,15 @@ import { Repository } from 'typeorm';
 import { CreateStudentDto } from './dto/create-student.dto';
 
 
-
 @Injectable()
 export class StudentService {
   constructor(
     @InjectRepository(Student)
     private readonly studentRepository: Repository<Student>,
   ){}
-  async createStudent(studentData: CreateStudentDto): Promise<Student> {
-    const student = this.studentRepository.create(studentData);
-    return this.studentRepository.save(student);
+  async findAll(): Promise<Student[]> {
+    return this.studentRepository.find();
   }
+  
   
 }
